@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Promo - Admin TopUpKuy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #718096;
+        }
+
+        .sidebar-menu-item.active {
+            background-color: #7c3aed;
+            color: white;
+        }
+
+        .sidebar-menu-item.active i {
+            color: white;
+        }
+
+        .modal {
+            display: none;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-slate-200 flex">
+
+    <aside id="sidebar"
+        class="w-64 bg-slate-800 min-h-screen p-4 space-y-6 fixed md:relative transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-30">
+        <a href="index.html" class="flex items-center space-x-2 px-2">
+            <i class="fas fa-gem fa-2x text-purple-400"></i>
+            <span
+                class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">TopUpKuy</span>
+        </a>
+        <nav class="space-y-2">
+            <a href="index.html"
+                class="sidebar-menu-item flex items-center space-x-3 text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2.5 rounded-lg transition duration-200">
+                <i class="fas fa-tachometer-alt fa-fw text-slate-400"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="pesanan.html"
+                class="sidebar-menu-item flex items-center space-x-3 text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2.5 rounded-lg transition duration-200">
+                <i class="fas fa-shopping-cart fa-fw text-slate-400"></i>
+                <span>Manajemen Pesanan</span>
+            </a>
+            <a href="produk.html"
+                class="sidebar-menu-item flex items-center space-x-3 text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2.5 rounded-lg transition duration-200">
+                <i class="fas fa-gamepad fa-fw text-slate-400"></i>
+                <span>Manajemen Game & Produk</span>
+            </a>
+            <a href="pengguna.html"
+                class="sidebar-menu-item flex items-center space-x-3 text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2.5 rounded-lg transition duration-200">
+                <i class="fas fa-users fa-fw text-slate-400"></i>
+                <span>Manajemen Pengguna</span>
+            </a>
+            <a href="promo.html"
+                class="sidebar-menu-item flex items-center space-x-3 text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2.5 rounded-lg transition duration-200 active">
+                <i class="fas fa-tags fa-fw text-slate-400"></i>
+                <span>Manajemen Promo</span>
+            </a>
+            <a href="laporan.html"
+                class="sidebar-menu-item flex items-center space-x-3 text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2.5 rounded-lg transition duration-200">
+                <i class="fas fa-chart-line fa-fw text-slate-400"></i>
+                <span>Laporan</span>
+            </a>
+            <a href="pengaturan.html"
+                class="sidebar-menu-item flex items-center space-x-3 text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2.5 rounded-lg transition duration-200">
+                <i class="fas fa-cog fa-fw text-slate-400"></i>
+                <span>Pengaturan</span>
+            </a>
+        </nav>
+        <div class="absolute bottom-4 left-4 right-4">
+            <a href="../login.html"
+                class="sidebar-menu-item flex items-center space-x-3 text-slate-300 hover:bg-red-600 hover:text-white px-3 py-2.5 rounded-lg transition duration-200 bg-slate-700">
+                <i class="fas fa-sign-out-alt fa-fw text-slate-400"></i>
+                <span>Keluar</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+        <header class="bg-slate-800 shadow-md p-4 flex justify-between items-center sticky top-0 z-20">
+            <button id="sidebar-toggle" class="md:hidden text-slate-300 hover:text-white focus:outline-none">
+                <i class="fas fa-bars fa-lg"></i>
+            </button>
+            <div class="hidden md:block text-xl font-semibold">
+                Manajemen Promo
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="text-slate-300 hover:text-white relative">
+                    <i class="fas fa-bell fa-lg"></i>
+                    <span
+                        class="absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                </button>
+                <div class="relative">
+                    <button id="user-menu-button" class="flex items-center space-x-2 text-slate-300 hover:text-white">
+                        <img src="https://via.placeholder.com/40/FFFFFF/000000/?text=A" alt="Admin Avatar"
+                            class="w-8 h-8 rounded-full object-cover border-2 border-slate-600">
+                        <span>Admin Ganteng</span>
+                        <i class="fas fa-chevron-down fa-xs"></i>
+                    </button>
+                    <div id="user-menu"
+                        class="hidden absolute right-0 mt-2 w-48 bg-slate-700 rounded-md shadow-lg py-1 z-50">
+                        <a href="#" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-600">Profil Saya</a>
+                        <a href="../login.html"
+                            class="block px-4 py-2 text-sm text-red-400 hover:bg-slate-600">Keluar</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 p-6 space-y-6">
+            <div class="text-sm text-slate-400">
+                <a href="index.html" class="hover:text-purple-400">Admin</a>
+                <span class="mx-2">/</span>
+                <span>Manajemen Promo</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-semibold text-white">Daftar Promosi</h1>
+                <button id="openAddPromoModal"
+                    class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Buat Promo Baru
+                </button>
+            </div>
+
+            <div class="bg-slate-800 shadow-xl rounded-xl overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-700">
+                            <tr>
+                                <th class="p-3 font-semibold text-slate-300">Nama Promo</th>
+                                <th class="p-3 font-semibold text-slate-300">Kode Kupon</th>
+                                <th class="p-3 font-semibold text-slate-300">Jenis</th>
+                                <th class="p-3 font-semibold text-slate-300">Nilai</th>
+                                <th class="p-3 font-semibold text-slate-300">Periode</th>
+                                <th class="p-3 font-semibold text-slate-300 text-center">Status</th>
+                                <th class="p-3 font-semibold text-slate-300 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700">
+                            <tr class="hover:bg-slate-700/50 transition-colors">
+                                <td class="p-3">Diskon Pengguna Baru</td>
+                                <td class="p-3 font-mono">NEWUSER20</td>
+                                <td class="p-3">Persentase</td>
+                                <td class="p-3">20% (Max. Rp 10.000)</td>
+                                <td class="p-3">01 Jun - 30 Jun 2025</td>
+                                <td class="p-3 text-center">
+                                    <span
+                                        class="px-2 py-0.5 text-xs rounded-full bg-green-500 text-green-900">Aktif</span>
+                                </td>
+                                <td class="p-3 text-center space-x-1">
+                                    <button class="text-yellow-400 hover:text-yellow-300" title="Edit Promo"><i
+                                            class="fas fa-edit"></i></button>
+                                    <button class="text-red-400 hover:text-red-300" title="Nonaktifkan"><i
+                                            class="fas fa-toggle-off"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/50 transition-colors">
+                                <td class="p-3">Cashback MLBB Juli</td>
+                                <td class="p-3 font-mono">MLBBJULI5K</td>
+                                <td class="p-3">Nominal</td>
+                                <td class="p-3">Rp 5.000</td>
+                                <td class="p-3">01 Jul - 31 Jul 2025</td>
+                                <td class="p-3 text-center">
+                                    <span
+                                        class="px-2 py-0.5 text-xs rounded-full bg-sky-500 text-sky-900">Dijadwalkan</span>
+                                </td>
+                                <td class="p-3 text-center space-x-1">
+                                    <button class="text-yellow-400 hover:text-yellow-300" title="Edit Promo"><i
+                                            class="fas fa-edit"></i></button>
+                                    <button class="text-green-400 hover:text-green-300" title="Aktifkan"><i
+                                            class="fas fa-toggle-on"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-700/50 transition-colors">
+                                <td class="p-3">Promo Gajian Mei</td>
+                                <td class="p-3 font-mono">-</td>
+                                <td class="p-3">Diskon Otomatis</td>
+                                <td class="p-3">10% Semua Produk</td>
+                                <td class="p-3">25 Mei - 27 Mei 2025</td>
+                                <td class="p-3 text-center">
+                                    <span
+                                        class="px-2 py-0.5 text-xs rounded-full bg-slate-500 text-slate-900">Kadaluarsa</span>
+                                </td>
+                                <td class="p-3 text-center space-x-1">
+                                    <button class="text-yellow-400 hover:text-yellow-300" title="Edit Promo"><i
+                                            class="fas fa-edit"></i></button>
+                                    <button class="text-slate-400" title="Sudah Selesai" disabled><i
+                                            class="fas fa-history"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="addPromoModal" class="modal fixed inset-0 bg-slate-900 bg-opacity-75 items-center justify-center p-4 z-40">
+        <div class="bg-slate-800 p-6 rounded-xl shadow-2xl w-full max-w-xl max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold" id="promoModalTitle">Buat Promo Baru</h3>
+                <button id="closeAddPromoModal" class="text-slate-400 hover:text-white"><i
+                        class="fas fa-times fa-lg"></i></button>
+            </div>
+            <form class="overflow-y-auto space-y-4 flex-grow pr-2">
+                <div>
+                    <label for="promoName" class="block text-sm font-medium text-slate-300 mb-1">Nama Promo</label>
+                    <input type="text" id="promoName"
+                        class="w-full bg-slate-700 border border-slate-600 rounded-lg p-2.5"
+                        placeholder="Contoh: Diskon Lebaran">
+                </div>
+                <div>
+                    <label for="promoCode" class="block text-sm font-medium text-slate-300 mb-1">Kode Kupon
+                        (Opsional)</label>
+                    <input type="text" id="promoCode"
+                        class="w-full bg-slate-700 border border-slate-600 rounded-lg p-2.5 uppercase"
+                        placeholder="Contoh: LEBARAN20">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="promoType" class="block text-sm font-medium text-slate-300 mb-1">Jenis
+                            Diskon</label>
+                        <select id="promoType" class="w-full bg-slate-700 border border-slate-600 rounded-lg p-2.5">
+                            <option value="persentase">Persentase</option>
+                            <option value="nominal">Nominal Tetap</option>
+                            <option value="otomatis">Diskon Otomatis (Tanpa Kode)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="promoValue" class="block text-sm font-medium text-slate-300 mb-1">Nilai
+                            Diskon</label>
+                        <input type="number" id="promoValue"
+                            class="w-full bg-slate-700 border border-slate-600 rounded-lg p-2.5"
+                            placeholder="Contoh: 20 (untuk %) atau 10000 (untuk Rp)">
+                    </div>
+                </div>
+                <div>
+                    <label for="promoMaxValue" class="block text-sm font-medium text-slate-300 mb-1">Maksimal Diskon
+                        (Rp) - Jika Persentase</label>
+                    <input type="number" id="promoMaxValue"
+                        class="w-full bg-slate-700 border border-slate-600 rounded-lg p-2.5"
+                        placeholder="Contoh: 15000">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="promoStartDate" class="block text-sm font-medium text-slate-300 mb-1">Tanggal
+                            Mulai</label>
+                        <input type="date" id="promoStartDate"
+                            class="w-full bg-slate-700 border border-slate-600 rounded-lg p-2.5 text-slate-300"
+                            style="color-scheme: dark;">
+                    </div>
+                    <div>
+                        <label for="promoEndDate" class="block text-sm font-medium text-slate-300 mb-1">Tanggal
+                            Selesai</label>
+                        <input type="date" id="promoEndDate"
+                            class="w-full bg-slate-700 border border-slate-600 rounded-lg p-2.5 text-slate-300"
+                            style="color-scheme: dark;">
+                    </div>
+                </div>
+                <div>
+                    <label for="promoUsageLimit" class="block text-sm font-medium text-slate-300 mb-1">Batas Penggunaan
+                        per Pengguna (Opsional)</label>
+                    <input type="number" id="promoUsageLimit"
+                        class="w-full bg-slate-700 border border-slate-600 rounded-lg p-2.5" placeholder="Contoh: 1">
+                </div>
+                <div>
+                    <label for="promoApplicableGames" class="block text-sm font-medium text-slate-300 mb-1">Berlaku
+                        untuk Game (Opsional, kosongkan untuk semua)</label>
+                    <select multiple id="promoApplicableGames"
+                        class="w-full bg-slate-700 border border-slate-600 rounded-lg p-2.5 h-24">
+                        <option value="mlbb">Mobile Legends</option>
+                        <option value="valorant">Valorant</option>
+                        <option value="pubgm">PUBG Mobile</option>
+                    </select>
+                    <p class="text-xs text-slate-400 mt-1">Tahan Ctrl/Cmd untuk memilih lebih dari satu.</p>
+                </div>
+                <div>
+                    <label for="promoStatus" class="block text-sm font-medium text-slate-300 mb-1">Status Promo</label>
+                    <select id="promoStatus" class="w-full bg-slate-700 border border-slate-600 rounded-lg p-2.5">
+                        <option value="aktif">Aktif</option>
+                        <option value="nonaktif">Non-Aktif</option>
+                        <option value="dijadwalkan">Dijadwalkan</option>
+                    </select>
+                </div>
+            </form>
+            <div class="mt-6 flex justify-end space-x-3 border-t border-slate-700 pt-4">
+                <button type="button" id="cancelAddPromoModal"
+                    class="bg-slate-600 hover:bg-slate-500 text-white py-2 px-4 rounded-lg">Batal</button>
+                <button type="submit" form="promoForm"
+                    class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg">Simpan Promo</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Script untuk toggle sidebar & user menu (Sama seperti di admin/index.html)
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenu = document.getElementById('user-menu');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+        userMenuButton.addEventListener('click', (e) => {
+            e.stopPropagation(); userMenu.classList.toggle('hidden');
+        });
+        document.addEventListener('click', (e) => {
+            if (!userMenu.contains(e.target) && e.target !== userMenuButton && !userMenuButton.contains(e.target)) {
+                userMenu.classList.add('hidden');
+            }
+        });
+
+        const currentPath = window.location.pathname.split("/").pop();
+        const menuItems = document.querySelectorAll('.sidebar-menu-item');
+        menuItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href') === currentPath) {
+                item.classList.add('active');
+                const pageTitle = item.querySelector('span').textContent;
+                document.querySelector('header .hidden.md\\:block.text-xl.font-semibold').textContent = pageTitle;
+                const breadcrumbContainer = document.querySelector('main .text-sm.text-slate-400');
+                if (breadcrumbContainer) {
+                    breadcrumbContainer.innerHTML = `<a href="index.html" class="hover:text-purple-400">Admin</a> <span class="mx-2">/</span> <span>${pageTitle}</span>`;
+                }
+            }
+        });
+
+        // Promo Modal Logic
+        const addPromoModal = document.getElementById('addPromoModal');
+        const openAddPromoModalBtn = document.getElementById('openAddPromoModal');
+        const closeAddPromoModalBtn = document.getElementById('closeAddPromoModal');
+        const cancelAddPromoModalBtn = document.getElementById('cancelAddPromoModal');
+        const promoModalTitle = document.getElementById('promoModalTitle');
+
+        function togglePromoModal(open, isEdit = false) {
+            promoModalTitle.textContent = isEdit ? 'Edit Promo' : 'Buat Promo Baru';
+            if (open) addPromoModal.classList.add('open');
+            else addPromoModal.classList.remove('open');
+        }
+
+        openAddPromoModalBtn.addEventListener('click', () => togglePromoModal(true));
+        closeAddPromoModalBtn.addEventListener('click', () => togglePromoModal(false));
+        cancelAddPromoModalBtn.addEventListener('click', () => togglePromoModal(false));
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                togglePromoModal(false);
+            }
+        });
+    </script>
+</body>
+
+</html>
